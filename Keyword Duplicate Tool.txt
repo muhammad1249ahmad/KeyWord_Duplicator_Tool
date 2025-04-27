@@ -1,0 +1,118 @@
+Keyword Duplicator & Performance Recommender Tool – Python Web App Plan
+
+-----------------------------------------
+PROJECT SUMMARY
+-----------------------------------------
+A Python-based Web App that allows you to upload a CSV or DOCX file containing Google Ads keywords and their performance metrics (CTR, CPC, Conversion Rate). The tool finds duplicate keywords within selected scopes (Ad Group or Campaign), allows loose or strict matching, and gives recommendations on whether to pause or continue keywords.
+
+-----------------------------------------
+FEATURES
+-----------------------------------------
+1. File Upload (.csv or .docx)
+2. Match Type Selection:
+   - Strict (Exact Match)
+   - Loose (Same Words, Any Order)
+   -Semantically(Dog Daycare=doggy/puppy day care)
+3. Duplicate Detection
+4. Performance-Based Recommendation:
+   - Pause if CTR is low AND CPC is high AND Conversion Rate is low
+   - Continue if performance is good
+5. Results Display Table
+6. Report Export (CSV/DOC)
+7. Simple UI (Streamlit or Flask-based)
+
+-----------------------------------------
+TECH STACK
+-----------------------------------------
+- Python
+- Streamlit (for UI) or Flask
+- pandas (data handling)
+- python-docx (for .docx parsing)
+- csv module
+- Optional: fuzzywuzzy (for fuzzy matching)
+- Hosting: Streamlit Cloud, Render, or Heroku
+
+-----------------------------------------
+FOLDER STRUCTURE
+-----------------------------------------
+keyword_tool/
+├── app.py                  # Main Streamlit app
+├── file_parser.py          # Parses CSV/DOCX
+├── analyzer.py             # Duplicate detection logic
+├── recommender.py          # Recommends pause/continue
+├── utils.py                # Word normalization, matching
+├── example_input.csv
+├── requirements.txt
+└── README.md
+
+-----------------------------------------
+WORKFLOW
+-----------------------------------------
+1. User Uploads CSV/DOCX File
+2. User Selects:
+   - Scope: Ad Group or Campaign
+   - Match Type: Strict or Loose
+3. File Parser:
+   - Extracts keyword, CTR, CPC, Conversion Rate, Ad Group, Campaign
+4. Keyword Analyzer:
+   - Normalizes keywords based on match type
+   - Groups data by selected scope
+   - Finds duplicate keywords
+5. Recommendation Engine:
+   - Applies performance rules
+   - Suggests Pause or Continue
+6. Results Display:
+   - Table with duplicates highlighted
+   - Recommendations with reasons
+7. Report Export:
+   - CSV or DOCX format download
+
+-----------------------------------------
+KEY FUNCTIONS TO IMPLEMENT
+-----------------------------------------
+normalize_keyword(keyword, match_type='loose'):
+    - Converts keyword to lowercase
+    - If loose, sorts words alphabetically
+
+find_duplicates(df, scope, match_type):
+    - Group data by Ad Group or Campaign
+    - Normalize keywords and find duplicates
+
+recommend_keywords(df):
+    - Apply custom rules based on CTR, CPC, Conversion Rate
+    - Add 'Recommendation' and 'Reason' columns
+
+-----------------------------------------
+DEVELOPMENT STEPS
+-----------------------------------------
+1. Environment Setup:
+   pip install streamlit pandas python-docx
+
+2. Create app.py with Streamlit:
+   - File uploader
+   - Dropdowns for scope and match type
+
+3. Parse input file:
+   - Use pandas for .csv
+   - Use python-docx for .docx
+
+4. Analyze keywords:
+   - Normalize based on match type
+   - Group by Ad Group or Campaign
+   - Detect duplicates
+
+5. Apply recommendations:
+   - Pause: CTR < 2%, CPC > 1.5, Conv Rate < 1%
+   - Continue: Otherwise
+
+6. Show results in DataFrame:
+   - Highlight duplicate rows
+   - Show recommendations
+
+7. Add download button:
+   - Export CSV or DOCX with results
+
+8. Deploy app:
+   - Use Streamlit Cloud (easiest)
+   - Or deploy Flask version to Render
+
